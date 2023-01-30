@@ -1,7 +1,6 @@
 {
   "name": "fastify",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,5 +8,18 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kratika-mtalkz/Fastify_basics.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kratika-mtalkz/Fastify_basics/issues"
+  },
+  "homepage": "https://github.com/Kratika-mtalkz/Fastify_basics#readme",
+  "description": "",
+  "dependencies": {
+    "fastify": "^4.12.0",
+    "nodemon": "^2.0.20"
+  }
 }
