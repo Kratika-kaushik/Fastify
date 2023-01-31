@@ -1,26 +1,20 @@
-let items=require("../Items")
+//let items=require("../Items")
+const mongoose=require("mongoose")
+const Employee=require("../models/schema")
 
-const getItem=function (req,reply){
-    reply.send(items);
+
+
+
+const postItem=async(req,reply)=>{
+    const Emp= new Employee(req.body)
+     Emp.save()
 }
 
-const postItem=function (req,reply){
-  //  let {id}=req.body.id;
-    let {name}=req.body;
-    
-    let item={
-               
-              name
-    }
+const deleteItem= async (req,reply)=>{
+    const id = req.params.id
+    const emp = await Employee.findByIdAndRemove(id)
 
-    items=[...items,item]
-    reply.code(201).send(item)
-}
-
-const deleteItem= function(req,reply){
-    const {id}=req.params;
-   items =items.filter(item=> item.id!=id)
     reply.send({message:`Item ${id} has been deleted`})
 }
 
-module.exports={getItem,postItem, deleteItem}
+module.exports={postItem, deleteItem}

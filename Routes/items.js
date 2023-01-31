@@ -1,23 +1,54 @@
-const {getItem , postItem, deleteItem}=require('../Controller/itemController')
+const { postItem, deleteItem}=require('../Controller/itemController')
+const mongoose=require('mongoose')
+const Employee=require("../models/schema")
 
 
-const getItemOPts={
-    schema:{
-        response:{
-            200:{
-                type:'array',
-                items:{
-                    type:'object',
-                    properties:{
-                       //id:{type:'string'},
-                        name:{type:'string'}
-                    }
-                }
-            }
+function itemRoute(fastify,options,done){
+    fastify.get('/items',async (req, reply) => {
+        try {
+          const res=await Employee.find()
+          reply.send(res)
+        } catch (err) {
+          console.error(err)
         }
-    },
-    handler: getItem,
+      })
+
+
+
+
+    
+    fastify.get('/items/:id',async (req,reply)=>{
+        const id = req.params.id
+        const emp = await Employee.findById(id)
+        reply.send(emp)
+    })
+    //Post request
+
+    fastify.post('/items',postItemOPts)
+
+    //Delete request
+    fastify.delete('/items/:id',deleteItemOPts)
+
+    done()
 }
+
+// const getItemOPts={
+//     schema:{
+//         response:{
+//             200:{
+//                 type:'array',
+//                 items:{
+//                     type:'object',
+//                     properties:{
+//                        //id:{type:'string'},
+//                         name:{type:'string'}
+//                     }
+//                 }
+//             }
+//         }
+//     },
+//     handler: getItem,
+// }
 
 const postItemOPts={
     schema:{
@@ -51,24 +82,5 @@ const deleteItemOPts={
         }
     },
     handler: deleteItem,
-}
-
-function itemRoute(fastify,options,done){
-    fastify.get('/items',getItemOPts)
-    
-    fastify.get('/items/:id',(req,reply)=>{
-        const {id}=req.params;
-    
-        const i=items.find((item)=> item.id===id)
-        reply.send(i);
-    })
-    //Post request
-
-    fastify.post('/items',postItemOPts)
-
-    //Delete request
-    fastify.delete('/items/:id',deleteItemOPts)
-
-    done()
 }
 module.exports=itemRoute
